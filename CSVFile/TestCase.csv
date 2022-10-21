@@ -1,0 +1,5 @@
+Sl.No,TestCase ID,TestCase Description,Client
+1,TU01,Check Customer Login with valid Data,Atmecs
+2,TU02,Check Customer Login with invalid Data,ConwayHealth
+3,TU03,Check response when valid email and password is entered,Aspire
+4,TU04,Check response when a User ID is Empty & Login Button is pressed,HrBerry
