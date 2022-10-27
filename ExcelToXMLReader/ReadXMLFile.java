@@ -11,24 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadXMLFile {
-	int rowIndex;
-	int columnIndex;
+	int rowIndex, columnIndex;
 
 	public void readingXMLFile(String userInput, String getClientName) {
 		String userWorkingDirectory = System.getProperty("user.dir");
 		String pathSeparator = System.getProperty("file.separator");
 
 		try {
-			File file = new File(userWorkingDirectory + pathSeparator + "src" + pathSeparator + "main" + pathSeparator
-					+ "java" + pathSeparator + "ExcelToXMLReader" + pathSeparator + "TestData.xml");
+			File file = new File(userWorkingDirectory + pathSeparator + "src" + pathSeparator + "main" + pathSeparator + "java" + pathSeparator + "ExcelToXMLReader" + pathSeparator + "TestData.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(file);
 			doc.getDocumentElement().normalize();
 			NodeList worksheetList = doc.getElementsByTagName("worksheet");
 
-			for (int t = 0; t < worksheetList.getLength(); t++) {
-				Element worksheetElement = (Element) worksheetList.item(t);
+			for (int i = 0; i < worksheetList.getLength(); i++) {
+				Element worksheetElement = (Element) worksheetList.item(i);
 				String clientName = (String) worksheetElement.getAttribute("name");
 				
 				if (getClientName.equals(clientName)) {
@@ -37,7 +35,6 @@ public class ReadXMLFile {
 					rowIndex = nodeList.getLength();
 					String columnNameString = "";
 					NodeList firstElement = nodeList.item(0).getChildNodes();
-					columnIndex = 0;
 
 					for (int j = 0; j < firstElement.getLength(); j++) {
 						Node childNode = firstElement.item(j);
@@ -56,12 +53,11 @@ public class ReadXMLFile {
 						NodeList childList = node.getChildNodes();
 						columnNameString = "";
 						
-						for (int j = 0; j < childList.getLength(); j++) {
-							Node childNode = childList.item(j);
+						for (int x = 0; x < childList.getLength(); x++) {
+							Node childNode = childList.item(x);
 							if (!childNode.getNodeName().equals("#text")) {
 								String fieldNameString = childNode.getNodeName();
-								columnNameString = columnNameString
-										+ eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
+								columnNameString = columnNameString + eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
 								columnNameString = columnNameString + ",";
 							}
 						}
@@ -86,7 +82,7 @@ public class ReadXMLFile {
 		Boolean isMatch = false;
 		String str = (String) myList.get(0);
 		myrow.add(str);
-		String[] res = str.replace("[", "").replace("]", "").split(",", columnIndex + 1);
+		String[] res = str.replace("[", "").replace("]", "").split(",", columnIndex+1);
 		for (int column = 0; column <= columnIndex; column++) {
 			String mytext = (res[column]).trim();
 			if (mytext.equals(userInput)) {
@@ -94,7 +90,7 @@ public class ReadXMLFile {
 				for (int row = 1; row <= rowIndex; row++) {
 					str = (String) myList.get(row);
 					myrow.add(str);
-					res = str.replace("[", "").replace("]", "").split(",", columnIndex + 1);
+					res = str.replace("[", "").replace("]", "").split(",", columnIndex+1);
 					System.out.println(res[column]);
 				}
 
@@ -110,7 +106,7 @@ public class ReadXMLFile {
 		for (int Index = 1; Index <= rowIndex; Index++) {
 			String str = (String) myList.get(Index);
 			myrow.add(str);
-			String[] res = str.replace("[", "").replace("]", "").split(",", columnIndex + 1);
+			String[] res = str.replace("[", "").replace("]", "").split(",", columnIndex+1);
 			for (int column = 0; column <= columnIndex; column++) {
 				String mytext = (res[column]).trim();
 				if (mytext.equals(userInput)) {
@@ -125,6 +121,6 @@ public class ReadXMLFile {
 
 	public static void main(String[] argS) {
 		ReadXMLFile testSample = new ReadXMLFile();
-		testSample.readingXMLFile("104137", "Medica_LEP");
+		testSample.readingXMLFile("104052", "MAPD_100Series");
 	}
 }
