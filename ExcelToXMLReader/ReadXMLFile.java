@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadXMLFile {
-	int rowIndex;
-	int columnIndex;
+	int rowIndex, columnIndex, index;
+	String resultRow;
 	List<String> columnTestData = new ArrayList<String>();
-	int index = 0;
-	String resultRow = "";
 	
+
 	public static void main(String[] argS) {
-		String enterTestCaseID="104137";
-		String enterClientName="Medica_LEP";
-		String enterFieldName="Mail_Kit_Name";
+		String enterTestCaseID = "104048";
+		String enterClientName = "MAPD_100Series";
+		String enterFieldName = "Lics";
 		ReadXMLFile testSample = new ReadXMLFile();
 		String result = testSample.readingXMLFile(enterTestCaseID, enterClientName, enterFieldName);
-		System.out.println("Output:" + result);
+		System.out.println("Result:::" + result);
 	}
-	
+
 	public String readingXMLFile(String userInput, String getClientName, String rowName) {
 		String userWorkingDirectory = System.getProperty("user.dir");
 		String pathSeparator = System.getProperty("file.separator");
@@ -71,8 +70,7 @@ public class ReadXMLFile {
 							Node childNode = childList.item(j);
 							if (!childNode.getNodeName().equals("#text")) {
 								String fieldNameString = childNode.getNodeName();
-								columnNameString = columnNameString
-										+ eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
+								columnNameString = columnNameString + eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
 								columnNameString = columnNameString + ",";
 							}
 						}
