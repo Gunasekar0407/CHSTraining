@@ -13,17 +13,18 @@ import java.util.List;
 public class TryReadXMLFile {
 	int rowIndex, columnIndex, index;
 	String resultRow, rowTestData;
-	static String enterClientName, enterTestData, enterFieldName;
+	static String enterClientName, enterTestCaseID, enterFieldName;
 	List<String> getRow = new ArrayList<String>();
 	List<String> myrow = new ArrayList<String>();
 	String columnTestData = "";
 
+
 	public static void main(String[] argS) {
-		enterTestData = "104052";
+		enterTestCaseID = "104052";
 		enterClientName = "MAPD_100Series";
 		enterFieldName = "";
 		TryReadXMLFile testSample = new TryReadXMLFile();
-		String result = testSample.readingXMLFile(enterTestData, enterClientName, enterFieldName);
+		String result = testSample.readingXMLFile(enterTestCaseID, enterClientName, enterFieldName);
 		System.out.println("Result:::" + result);
 	}
 
@@ -92,7 +93,7 @@ public class TryReadXMLFile {
 			e.printStackTrace();
 		}
 
-		if ((enterFieldName.isBlank()) && (enterTestData != rowName))
+		if ((enterFieldName.isBlank()) && (enterTestCaseID != rowName))
 			return rowTestData;
 
 		else {
