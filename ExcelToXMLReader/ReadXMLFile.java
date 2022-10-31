@@ -1,4 +1,4 @@
-package ExcelToXMLReader;
+package Try;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -10,18 +10,20 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadXMLFile {
+public class TryReadXMLFile {
 	int rowIndex, columnIndex, index;
-	String resultRow;
-	List<String> columnTestData = new ArrayList<String>();
-	
+	String resultRow, rowTestData;
+	static String enterClientName, enterTestData, enterFieldName;
+	List<String> getRow = new ArrayList<String>();
+	List<String> myrow = new ArrayList<String>();
+	String columnTestData = "";
 
 	public static void main(String[] argS) {
-		String enterTestCaseID = "104048";
-		String enterClientName = "MAPD_100Series";
-		String enterFieldName = "Lics";
-		ReadXMLFile testSample = new ReadXMLFile();
-		String result = testSample.readingXMLFile(enterTestCaseID, enterClientName, enterFieldName);
+		enterTestData = "104052";
+		enterClientName = "MAPD_100Series";
+		enterFieldName = "";
+		TryReadXMLFile testSample = new TryReadXMLFile();
+		String result = testSample.readingXMLFile(enterTestData, enterClientName, enterFieldName);
 		System.out.println("Result:::" + result);
 	}
 
@@ -70,7 +72,8 @@ public class ReadXMLFile {
 							Node childNode = childList.item(j);
 							if (!childNode.getNodeName().equals("#text")) {
 								String fieldNameString = childNode.getNodeName();
-								columnNameString = columnNameString + eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
+								columnNameString = columnNameString
+										+ eElement.getElementsByTagName(fieldNameString).item(0).getTextContent();
 								columnNameString = columnNameString + ",";
 							}
 						}
@@ -78,49 +81,49 @@ public class ReadXMLFile {
 
 					}
 
-					List<String> getRow = new ArrayList<String>();
-					List<String> myrow = new ArrayList<String>();
 					index = getIndexValue(myList, getRow, rowName);
-					Boolean resultColumn = printColumn(myList, myrow, userInput);
+					String resultColumn = printColumn(myList, myrow, userInput);
 					resultRow = printRow(myList, myrow, userInput);
-					if (!resultColumn && (resultRow.isEmpty())) {
-						System.out.println("No Match Found");
-					}
 				}
+
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String[] arrOfStr = resultRow.split(",");
-		return arrOfStr[index];
+
+		if ((enterFieldName.isBlank()) && (enterTestData != rowName))
+			return rowTestData;
+
+		else {
+			String[] arrOfStr = resultRow.split(",");
+			return arrOfStr[index];
+		}
 	}
 
-	public Boolean printColumn(ArrayList<Object> myList, List<String> myrow, String userInput) {
-		Boolean isMatch = false;
+	public String printColumn(ArrayList<Object> myList, List<String> myrow, String userInput) {
 		String str = (String) myList.get(0);
 		myrow.add(str);
 		String[] res = str.replace("[", "").replace("]", "").split(",", columnIndex + 1);
 		for (int column = 0; column <= columnIndex; column++) {
 			String mytext = (res[column]).trim();
 			if (mytext.equals(userInput)) {
-				System.out.println("Result:  ");
 				for (int row = 1; row <= rowIndex; row++) {
 					str = (String) myList.get(row);
 					myrow.add(str);
 					res = str.replace("[", "").replace("]", "").split(",", columnIndex + 1);
-					columnTestData.add(res[column]);
-				}
+					// columnTestData.add(res[column]);
+					columnTestData = columnTestData + " " + res[column];
 
-				isMatch = true;
+				}
 			}
 		}
-		return isMatch;
+		return columnTestData;
 
 	}
 
 	public String printRow(ArrayList<Object> myList, List<String> myrow, String userInput) {
-		String rowTestData = "";
+
 		for (int Index = 1; Index <= rowIndex; Index++) {
 			String str = (String) myList.get(Index);
 			myrow.add(str);
@@ -145,6 +148,7 @@ public class ReadXMLFile {
 			if (mytext.equals(rowName)) {
 				indexing = column;
 			}
+
 		}
 		return indexing;
 	}
