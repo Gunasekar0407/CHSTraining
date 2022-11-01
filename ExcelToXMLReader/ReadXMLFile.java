@@ -12,11 +12,11 @@ import java.util.List;
 
 public class TryReadXMLFile {
 	int rowIndex, columnIndex, index;
-	String resultRow, rowTestData;
+	String resultRow, rowTestData, columnTestData;
 	static String enterClientName, enterTestCaseID, enterFieldName;
 	List<String> getRow = new ArrayList<String>();
 	List<String> myrow = new ArrayList<String>();
-	String columnTestData = "";
+
 
 
 	public static void main(String[] argS) {
